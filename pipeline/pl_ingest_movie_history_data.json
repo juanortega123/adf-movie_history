@@ -57,7 +57,7 @@
 					},
 					"ifFalseActivities": [
 						{
-							"name": "email error",
+							"name": "Mesanaje de error",
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
