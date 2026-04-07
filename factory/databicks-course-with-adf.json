@@ -1,0 +1,9 @@
+{
+	"name": "databicks-course-with-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "75858732-6d71-4524-bdcb-58d1c30e9335",
+		"tenantId": "79e43a49-9583-4d90-8949-dce511b02eb5"
+	}
+}

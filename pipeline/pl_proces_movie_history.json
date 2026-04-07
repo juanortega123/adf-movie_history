@@ -1,0 +1,74 @@
+{
+	"name": "pl_proces_movie_history",
+	"properties": {
+		"activities": [
+			{
+				"name": "pl_ingestion",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_ingest_movie_history_data",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"p_envionment": {
+							"value": "@pipeline().parameters.p_environment",
+							"type": "Expression"
+						},
+						"p_file_date": {
+							"value": "@formatDateTime(pipeline().parameters.p_file_date,'yyyy-MM-dd')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "ol_transformation",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "pl_ingestion",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_transformation_movie_history_data",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"p_file_date": {
+							"value": "@formatDateTime(pipeline().parameters.p_file_date,'yyyy-MM-dd')",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"p_environment": {
+				"type": "string",
+				"defaultValue": "production"
+			},
+			"p_file_date": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-07T03:53:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
